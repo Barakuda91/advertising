@@ -1,0 +1,29 @@
+<html><head>
+
+
+
+
+
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+    var supp_key = "1d2a2cc016d9a93f26fe2cd7e253dfcc",
+        supp_time = new Date().getTime(),
+        supp_custom_params = {};
+    var ws=new WebSocket('ws://localhost:1991');
+    ws.onopen=function(){
+        console.log('onopen');
+        ws.send(JSON.stringify({supp_key,supp_time,supp_custom_params}));
+    }
+    ws.onmessage=function(m){
+        var b = JSON.parse(m.data);
+        ws.close();
+        console.log('onmessage', b);
+        document.getElementsByTagName('body')[0].innerHTML+=b.body;
+    }
+</script>
+    </body>
+</html>
