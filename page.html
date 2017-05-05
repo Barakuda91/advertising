@@ -21,7 +21,7 @@
     ws.onmessage=function(m){
         var b = JSON.parse(m.data);
         ws.close();
-        console.log('onmessage', b);
+        console.log(b.body);
         document.getElementsByTagName('body')[0].innerHTML+=b.body;
     }
 </script>
