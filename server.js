@@ -16,6 +16,7 @@ const wss = new WebSocket.Server({
 });
 
 wss.on('connection',(ws) => {
+    console.log('Connect');
     ws.on('message', (message) => {
         let data = JSON.parse(message);
         let key = data.supp_key;
