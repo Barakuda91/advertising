@@ -13,7 +13,7 @@
     var supp_key = "1d2a2cc016d9a93f26fe2cd7e253dfcc",
         supp_time = new Date().getTime(),
         supp_custom_params = {};
-    var ws=new WebSocket('ws://localhost:1991');
+    var ws=new WebSocket('ws://185.127.19.213:1991');
     ws.onopen=function(){
         console.log('onopen');
         ws.send(JSON.stringify({supp_key,supp_time,supp_custom_params}));
