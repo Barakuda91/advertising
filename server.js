@@ -33,7 +33,14 @@ wss.on('connection',(ws) => {
 
         request(url, function (error, response, body) {
             //console.log('body:', body); // Print the HTML for the Google homepage.
-            loger.log({'statusCode:':response && response.statusCode,error,key,userIp,requestUrl,userAgent,url});
+            loger.log('statusCode = '+response.statusCode);
+            loger.log('error = '+error);
+            loger.log('key = '+key);
+            loger.log('userIp = '+userIp);
+            loger.log('requestUrl = '+requestUrl);
+            loger.log('userAgent = '+userAgent);
+            loger.log('url = '+url);
+
             ws.send(body);
         });
     });
