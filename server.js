@@ -21,8 +21,8 @@ wss.on('connection',(ws) => {
     ws.on('message', (message) => {
         let data = JSON.parse(message);
         let key = data.supp_key;
-        let userIp = '125.89.56.34';ws.upgradeReq.connection.remoteAddress;
-        let url = 'http://bbvc2.com/ads-api-v3?key=1d2a2cc016d9a93f26fe2cd7e253dfcc&format=json';
+        let userIp = '125.89.56.34';//ws.upgradeReq.connection.remoteAddress;
+        let url = 'http://bbvc2.com/ads-api-v3?key='+key+'&clientIp=112.12.23.33&requestUrl=http://foo.bar/foo/bar&format=json';
 
         request(url, function (error, response, body) {
             console.log('error:', error); // Print the error if one occurred
