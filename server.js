@@ -1,6 +1,6 @@
-//const loger     = require('./loger');
+const Loger     = require('./loger');
 const http      = require('http');
-//const colors    = require('colors');
+const colors    = require('colors');
 //const config    = require('config');
 //const md5       = require('md5');
 //const router    = require('router');
@@ -16,18 +16,20 @@ const wss = new WebSocket.Server({
     port: 1991
 });
 
+const loger = new Loger('server');
+
 wss.on('connection',(ws) => {
-    console.log('Connect');
+    loger.log('Connect');
     ws.on('message', (message) => {
         let data = JSON.parse(message);
         let key = data.supp_key;
-        let userIp = '125.89.56.34';//ws.upgradeReq.connection.remoteAddress;
-        let url = 'http://bbvc2.com/ads-api-v3?key='+key+'&clientIp=112.12.23.33&requestUrl=http://foo.bar/foo/bar&format=json';
+        //let userIp  = '125.89.56.34';
+        let userIp      = ws.upgradeReq.connection.remoteAddress;
+        let url = 'http://bbvc2.com/ads-api-v3?key='+key+'&clientIp='+userIp+'&requestUrl=http://foo.bar/foo/bar&format=json';
 
         request(url, function (error, response, body) {
-            console.log('error:', error); // Print the error if one occurred
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             //console.log('body:', body); // Print the HTML for the Google homepage.
+            loger.log({'statusCode:':response && response.statusCode,error,key,userIp,url});
             ws.send(body);
         });
     });
