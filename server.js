@@ -18,18 +18,21 @@ const wss = new WebSocket.Server({
 
 const loger = new Loger('server');
 
+loger.log('Start');
 wss.on('connection',(ws) => {
     loger.log('Connect');
     ws.on('message', (message) => {
         let data = JSON.parse(message);
         let key = data.supp_key;
+        let requestUrl = ws.upgradeReq.headers.origin;
+        let userAgent = ws.upgradeReq.headers['user-agent'];
         //let userIp  = '125.89.56.34';
         let userIp      = ws.upgradeReq.connection.remoteAddress;
-        let url = 'http://bbvc2.com/ads-api-v3?key='+key+'&clientIp='+userIp+'&requestUrl=http://foo.bar/foo/bar&format=json';
+        let url = 'http://bbvc2.com/ads-api-v3?key='+key+'&clientIp='+userIp+'&requestUrl='+requestUrl+'&clientUa='+userAgent+'&format=json';
 
         request(url, function (error, response, body) {
             //console.log('body:', body); // Print the HTML for the Google homepage.
-            loger.log({'statusCode:':response && response.statusCode,error,key,userIp,url});
+            loger.log({'statusCode:':response && response.statusCode,error,key,userIp,requestUrl,userAgent,url});
             ws.send(body);
         });
     });
