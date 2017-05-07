@@ -41,8 +41,12 @@ wss.on('connection',(ws) => {
             loger.log('requestUrl = '+requestUrl);
             loger.log('userAgent = '+userAgent);
             loger.log('url = '+url);
-
-            ws.send(body);
+            if (ws.readyState !== 1) {
+                loger.log('readyState = ' + ws.readyState);
+            } else {
+                ws.send(body);
+            }
+            }
         });
     });
 });
