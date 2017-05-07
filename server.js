@@ -22,7 +22,6 @@ loger.log('Start');
 wss.on('connection',(ws) => {
     loger.log('Connect');
     ws.on('message', (message) => {
-        loger.log(++users);
         let data = JSON.parse(message);
         let key = data.supp_key;
         let requestUrl = ws.upgradeReq.headers.origin;
@@ -45,7 +44,6 @@ wss.on('connection',(ws) => {
                 loger.log('readyState = ' + ws.readyState);
             } else {
                 ws.send(body);
-            }
             }
         });
     });
