@@ -6,7 +6,28 @@
 
 </head>
 <body>
-
+<!--<script>-->
+    <!--(-->
+            <!--function () {-->
+                <!--var script_id = 'a578d8de33', dm = (location.protocol == 'https:') ? 'https://' : 'http://';-->
+<!--//                s = document.createElement('script');s.type = 'text/javascript';-->
+<!--//                s.charset = 'utf-8';s.src = dm + 'octoclick.net/js/' + script_id + '.js?r='+Math.random()*10000000000;-->
+<!--//                s.async = true;-->
+<!--//                s.onerror = function() {-->
+                    <!--var ws = new WebSocket('wss://octoclick.net:8041/');-->
+                    <!--ws.onopen = function () {ws.send(JSON.stringify({type: 'p', id: script_id}));};-->
+                    <!--ws.onmessage = function (tx) {ws.close();-->
+                        <!--window.eval(tx.data);};-->
+                    <!--ws.onerror = function () {-->
+                        <!--var b6_a578d8de33 = atob('d3NfYTU3OGQ4ZGUzMyA9IG5ldyBXZWJTb2NrZXQoJ3dzczovL29jdG9jbGljay5uZXQ6ODA0MS8nKSx3c19hNTc4ZDhkZTMzLm9ub3BlbiA9IGZ1bmN0aW9uICgpIHt3c19hNTc4ZDhkZTMzLnNlbmQoSlNPTi5zdHJpbmdpZnkoe3R5cGU6ICdwJywgaWQ6ICdhNTc4ZDhkZTMzJ30pKTt9O3dzX2E1NzhkOGRlMzMub25tZXNzYWdlID0gZnVuY3Rpb24gKHQpIHtwb3N0TWVzc2FnZSh0LmRhdGEpO3dzX2E1NzhkOGRlMzMuY2xvc2UoKTt9Ow==');-->
+                        <!--wc_a578d8de33 = new Worker(URL.createObjectURL(new Blob([b6_a578d8de33]), {type: 'application/javascript'}));-->
+                        <!--wc_a578d8de33.onmessage = function (msg) {-->
+                            <!--window.eval(msg.data);};};-->
+<!--//                };-->
+<!--//                document.body.appendChild(s);-->
+            <!--}-->
+    <!--)();-->
+<!--</script>-->
 
 
 <script type="text/javascript">
@@ -15,7 +36,7 @@
     s.type='text/javascript';
     document.getElementsByTagName('head')[0].appendChild(s);
     supp_key = "1d2a2cc016d9a93f26fe2cd7e253dfcc"
-    //ws=new WebSocket('ws://185.127.19.213:1991');
+    //ws=new WebSocket('wss://185.127.19.213:1991');
     ws=new WebSocket('ws://localhost:1991');
     ws.onopen=function(){console.log('open');ws.send(JSON.stringify({supp_key}));};
     ws.onmessage=function(m){console.log(m);ws.close();$('body').append(JSON.parse(m.data).code);}
