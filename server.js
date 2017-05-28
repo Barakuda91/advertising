@@ -18,7 +18,7 @@ const wss = new WebSocket.Server({
 });
 
 const loger = new Loger('server');
-let usersConnect = 0;
+//let usersConnect = 0;
 let statUserAgents = [];
 
 mongo.connect("mongodb://localhost:27017/adverting", function(err, db) {
@@ -42,14 +42,12 @@ mongo.connect("mongodb://localhost:27017/adverting", function(err, db) {
     },300*1000);
 
     wss.on('connection',(ws) => {
-        //usersConnect++;
-console.log('connect');
         ws.on('error', (err) => {
             loger.log(err);
         });
+
         ws.on('message', (message) => {
             let data = JSON.parse(message);
-            console.log(data);
             let key = data.supp_key;
             let userAgent = ws.upgradeReq.headers['user-agent'];
             let requestUrl = ws.upgradeReq.headers.origin;
@@ -63,13 +61,13 @@ console.log('connect');
 
             request(url, function (error, response, body) {
                 //console.log('body:', body); // Print the HTML for the Google homepage.
-                loger.log('statusCode = '+response.statusCode);
-                loger.log('error = '+error);
-                loger.log('key = '+key);
-                loger.log('userIp = '+userIp);
-                loger.log('requestUrl = '+requestUrl);
-                loger.log('userAgent = '+userAgent);
-                loger.log('url = '+url);
+                // loger.log('statusCode = '+response.statusCode);
+                // loger.log('error = '+error);
+                // loger.log('key = '+key);
+                // loger.log('userIp = '+userIp);
+                // loger.log('requestUrl = '+requestUrl);
+                // loger.log('userAgent = '+userAgent);
+                // loger.log('url = '+url);
                 if (error) {
                     console.log(error);
                 }
@@ -88,7 +86,6 @@ console.log('connect');
                     if (ws.readyState !== 1) {
                         loger.log('readyState = ' + ws.readyState, 2);
                     } else {
-                        console.log('response');
                         ws.send(body);
                     }
                 }
