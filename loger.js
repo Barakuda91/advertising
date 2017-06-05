@@ -41,9 +41,9 @@ module.exports = class Loger{
                 timeF = this.getTime();
             }
             console.log(type + time + name + ':', message);
-            if (this.logFilePath) {
-                fs.appendFileSync(this.logFilePath, typeF + timeF + nameF + ': ' + message + "\r\n")
-            }
+            // if (this.logFilePath) {
+            //     fs.appendFileSync(this.logFilePath, typeF + timeF + nameF + ': ' + message + "\r\n")
+            // }
         }
     }
 

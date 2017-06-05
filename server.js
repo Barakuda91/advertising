@@ -1,5 +1,5 @@
 const Loger     = require('./loger');
-const http      = require('http');
+const http      = require('https');
 const colors    = require('colors');
 //const config    = require('config');
 //const md5       = require('md5');
@@ -13,9 +13,25 @@ const mongo    = require('mongodb').MongoClient;
 const request       = require('request');
 const fs       = require('fs');
 
-const wss = new WebSocket.Server({
+const options = {
+    //ca: fs.readFileSync('cerf/ssl.ca'),
+    cert: fs.readFileSync('cerf/ssl.ca'),
+    //key: fs.readFileSync('cerf/ssl.ca')
+};
+
+const httpsServer = http.createServer(options, (req, res) => {
+   console.log('new_req');
+});
+const ws = require('ws').Server;
+const wss = new ws({
+    server: httpsServer,
     port: 1991
 });
+
+//
+// const wss = new WebSocket.Server({
+// });
+
 
 const loger = new Loger('server');
 //let usersConnect = 0;
