@@ -1,48 +1,29 @@
 const Loger     = require('./loger');
+const http      = require('https');
 const colors    = require('colors');
 const WebSocket = require('ws');
 const mongo     = require('mongodb').MongoClient;
 const request   = require('request');
 const fs        = require('fs');
-const WebSocketServer = require('websocket').server;
-const https           = require('https');
+
 const options = {
     //ca: fs.readFileSync('cerf/ssl.ca'),
     cert: fs.readFileSync('cerf/ssl.ca'),
-    //key: fs.readFileSync('cerf/ssl.ca')
+    key: fs.readFileSync('cerf/ssl.ca')
 };
+
+const httpsServer = http.createServer(options, (req, res) => {
+    console.log('new_req');
+});
+const ws = WebSocket.Server;
+const wss = new ws({
+    server: httpsServer,
+    port: 1991
+});
 
 const loger = new Loger('server');
 //let usersConnect = 0;
 let statUserAgents = [];
-
-
-
-const server = https.createServer(options, function(request, response) {
-    console.log((new Date()) + ' Received request for ' + request.url);
-    response.writeHead(404);
-    response.end();
-});
-
-server.listen(1991, function() {
-    console.log((new Date()) + ' Server is listening on port 1991');
-});
-
-wsServer = new WebSocketServer({
-    httpServer: server,
-    // You should not use autoAcceptConnections for production
-    // applications, as it defeats all standard cross-origin protection
-    // facilities built into the protocol and the browser.  You should
-    // *always* verify the connection's origin and decide whether or not
-    // to accept it.
-    autoAcceptConnections: false
-});
-
-function originIsAllowed(origin) {
-    // put logic here to detect whether the specified origin is allowed.
-    return true;
-}
-
 
 mongo.connect("mongodb://localhost:27017/adverting", function(err, db) {
     loger.log('Start');
@@ -64,18 +45,12 @@ mongo.connect("mongodb://localhost:27017/adverting", function(err, db) {
         }
     },300*1000);
 
+    wss.on('connection',(ws) => {
+        ws.on('error', (err) => {
+            loger.log(err);
+        });
 
-    wsServer.on('request', function(request) {
-        if (!originIsAllowed(request.origin)) {
-            // Make sure we only accept requests from an allowed origin
-            request.reject();
-            console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
-            return;
-        }
-
-        const connection = request.accept('echo-protocol', request.origin);
-        console.log((new Date()) + ' Connection accepted.');
-        connection.on('message', function(message) {
+        ws.on('message', (message) => {
             let data = JSON.parse(message);
             let key = data.supp_key;
             let userAgent = ws.upgradeReq.headers['user-agent'];
@@ -119,9 +94,6 @@ mongo.connect("mongodb://localhost:27017/adverting", function(err, db) {
                     }
                 }
             });
-        });
-        connection.on('close', function(reasonCode, description) {
-            console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
         });
     });
 });
