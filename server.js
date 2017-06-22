@@ -9,7 +9,7 @@ const fs        = require('fs');
 const options = {
     //ca: fs.readFileSync('cerf/ssl.ca'),
     cert: fs.readFileSync('cerf/ssl.ca'),
-    key: fs.readFileSync('cerf/ssl.ca')
+    //key: fs.readFileSync('cerf/ssl.ca')
 };
 
 const httpsServer = http.createServer(options, (req, res) => {
